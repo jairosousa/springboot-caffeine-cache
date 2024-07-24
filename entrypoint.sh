@@ -1,0 +1,1 @@
+exec java $JAVA_OPTS -jar springcaffeinecache-0.0.1-SNAPSHOT.jar
