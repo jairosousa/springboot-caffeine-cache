@@ -49,5 +49,23 @@ jobs:
       - name: Run tests with Maven
         run: mvn test
 
-      - name: Verify build
+      - name: Start application
         run: java -jar target/springcaffeinecache-0.0.1-SNAPSHOT.jar
+
+      - name: Verify build
+        run: curl --fail http://localhost:8080/ || exit 1
+
+      - name: Stop application
+        run: |
+            PID=$(pgrep -f 'java -jar target/springcaffeinecache-0.0.1-SNAPSHOT.jar')
+            if [ -n "$PID" ]; then
+              echo "Processo encontrado com PID: $PID"
+              echo "Finalizando o processo..."
+              kill -9 $PID
+              if [ $? -eq 0 ]; then
+               echo "Processo $PID finalizado com sucesso."
+              else
+                echo "Falha ao finalizar o processo $PID."
+            else
+              echo "Nenhum processo encontrado para $APP_NAME."
+            fi
