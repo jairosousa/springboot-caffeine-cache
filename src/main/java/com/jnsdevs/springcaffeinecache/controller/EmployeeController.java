@@ -38,6 +38,7 @@ public class EmployeeController {
 
     @GetMapping("/{id}")
     @Cacheable(key = "#id")
+//    @Cacheable(keyGenerator = "customKeyGenerator")
     public ResponseEntity<Optional<Employee>> find(@PathVariable(value = "id") Integer id) {
         log.info("Employee data fetched from database:: " + id);
         return ResponseEntity.ok(employeeRepository.findById(id));
